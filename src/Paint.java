@@ -1,5 +1,9 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
@@ -47,7 +51,7 @@ static class MyComponent extends JComponent{
         JFrame jframe = new JFrame();
         jframe.add (new MyComponent());
         jframe.setTitle("Панель для рисования");
-        jframe.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        jframe.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         jframe.setSize(500, 500);
         jframe.setVisible(true);
         ImageIcon  imgi = new ImageIcon("src/fox.png");
@@ -55,7 +59,64 @@ static class MyComponent extends JComponent{
         Toolkit toolkit = Toolkit.getDefaultToolkit(); //набор инструментов со стандартными настройками
         Dimension dimension = toolkit.getScreenSize(); //получить разрешение экрана
         jframe.setLocation(dimension.width/3, dimension.height/5);
+
+        jframe.addWindowListener(new WindowListener() {
+            @Override
+            public void windowOpened(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowClosing(WindowEvent we) {
+                JDialog jDialog = new JDialog();
+                Toolkit toolkit = Toolkit.getDefaultToolkit();
+                Dimension dimension = toolkit.getScreenSize();
+                jDialog.setLocation(dimension.width/7*3, dimension.height/3);
+                jDialog.setSize(250,150);
+                JLabel jLabel = new JLabel("Вы уверены, что хотите выйти?");
+                JButton jButton1 = new JButton("Да");
+                JButton jButton2 = new JButton("Нет");
+                JPanel jPanel = new JPanel();
+                jDialog.add(jPanel);
+                jPanel.add (jLabel);
+                jPanel.add (jButton1);
+                jPanel.add (jButton2);
+                jDialog.setVisible(true);
+                jButton1.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        System.exit(1);
+                    }
+                 });
+            }
+
+            @Override
+            public void windowClosed(WindowEvent we) {
+
+            }
+
+            @Override
+            public void windowIconified(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowDeiconified(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowActivated(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowDeactivated(WindowEvent e) {
+
+            }
+        });
     }
+
 
 }
 
